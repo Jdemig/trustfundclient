@@ -27,14 +27,9 @@ const infoMessage = ref('');
 const successMessage = ref('');
 
 
-console.log(date / 1000);
-
-
 const withdrawalAddress = ref('');
 
 onMounted(async () => {
-  console.log(window.ethereum);
-
   if (window.ethereum) {
     setAddress();
 
@@ -94,12 +89,6 @@ const isWithdrawDateToday = () => {
 }
 
 const onSubmitBeneficiary = async () => {
-  console.log(beneficiaryAddress);
-  console.log(month, day, year);
-
-
-  console.log(ethers.BrowserProvider);
-
   validateAddress();
   const errorMessage = validateDate(month.value, day.value, year.value);
   if (errorMessage) {
@@ -123,20 +112,13 @@ const onSubmitBeneficiary = async () => {
     timestamp = Math.round((new Date()).getTime() / 1000 + 60); // add 60 seconds to the current time so that the user can withdraw immediately
   }
 
-
-  console.log(timestamp);
-
   const txn = await contract.depositFunds(beneficiaryAddress.value, timestamp, {
     value: ethers.parseEther(depositAmount.value.toString()),
   });
 
-  console.log(txn);
-
   setSuccessMessage('Transaction sent!');
 
   const receipt = await txn.wait();
-
-  console.log(receipt);
 
   setSuccessMessage('Transaction confirmed!');
 }
@@ -155,11 +137,7 @@ const onGetBalance = async () => {
 
     const txn = await contract.getFundsAmount(beneficiaryAddress.value);
 
-    console.log(txn);
-
     const ethValue = ethers.formatEther(txn);
-
-    console.log(ethValue);
 
     if (ethValue === '0.0') {
       balance.value = 0;
@@ -171,15 +149,10 @@ const onGetBalance = async () => {
 
     const txn2 = await contract.getFundsWithdrawalDate(beneficiaryAddress.value);
 
-    console.log(txn2);
-
     const date = new Date(parseInt(txn2) * 1000);
-
-    console.log(date);
 
     withdrawalDate.value = date.toDateString();
   } catch (e) {
-    console.log(e);
     setErrorMessage(e.message);
   }
 }
@@ -199,14 +172,12 @@ const onWithdrawBalance = async () => {
 
     const txn = await contract.withdrawFunds();
 
-    console.log(txn);
+    setSuccessMessage('Transaction sent!');
 
     const receipt = await txn.wait();
 
-    console.log(receipt);
+    setSuccessMessage('Transaction confirmed!');
   } catch (e) {
-    console.log(e);
-
     if (e.message.includes('No funds available')) {
       return setErrorMessage('No funds available');
     }
