@@ -1,6 +1,6 @@
 # Trust Fund Client
 
-This is the client side application to manage a trust fund for your beneficiaries. It allows users to add ETH funds to a beneficiaries account and after X date the beneficiary will be allowed to withdrawal their funds.
+This is the client side application to manage a trust fund for your beneficiaries. It allows users to add ETH funds to a beneficiaries account and after X date the beneficiary will be allowed to withdraw their funds.
 
 
 ## Setup
