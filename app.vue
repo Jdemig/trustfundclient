@@ -90,7 +90,7 @@ const isWithdrawDateToday = () => {
 
 const onSubmitBeneficiary = async () => {
   validateAddress();
-  const errorMessage = validateDate(month.value, day.value, year.value);
+  const errorMessage = validateDate(day.value, month.value, year.value);
   if (errorMessage) {
     setErrorMessage(errorMessage);
     throw new Error(errorMessage);
